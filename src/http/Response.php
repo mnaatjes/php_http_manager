@@ -9,6 +9,7 @@
      *  - Self contained in php_http_manager
      *  - TODO: Modify send() for shorthand (i.e. calculates status and content-type and just takes body, defines, and sends)
      *  - TODO: Create render() method for rendering /views
+     * @since 2.1   Added viewEngine parameter
      */
     /*----------------------------------------------------------*/
     class Response {
@@ -34,17 +35,37 @@
          * @var string|null HTTP response body
          */
         protected ?string $body = null;
+        /**
+         * @var null|object View engine for rendering content
+         */
+        protected ?object $view;
         /*----------------------------------------------------------*/
         /**
          * Constructor
          * @param 
          */
         /*----------------------------------------------------------*/
-        public function __construct(?array $config=null){
-            $this->config       = $this->validateConfig($config);
+        public function __construct(?array $config=null, ?object $view_engine=null){
+            /**
+             * Set configuration
+             */
+            $this->config = $this->validateConfig($config);
+            /**
+             * Extract and parse server parameters
+             */
             $this->serverParams = $this->getServerParams($this->config);
-            $this->headers      = new Headers($this->serverParams, true, $this->config);
-            $this->errors       = new Errors($this->config['errors']);
+            /**
+             * Declare Headers object
+             */
+            $this->headers = new Headers($this->serverParams, true, $this->config);
+            /**
+             * Declare View Engine if present
+             */
+            $this->view = $view_engine;
+            /**
+             * TODO: Fix Error handling
+             */
+            $this->errors = new Errors($this->config['errors']);
         }
         /*----------------------------------------------------------*/
         /**
@@ -291,6 +312,57 @@
         /*----------------------------------------------------------*/
         public function getBody(){
             return $this->body;
+        }
+        /*----------------------------------------------------------*/
+        /**
+         * Renders document using View Engine:
+         * - Validates view-engine set
+         * - Validates view-name source
+         * - Collects content results
+         * - Checks for errors
+         * - Determines headers: content-type, status
+         * - Sets response body
+         * - Sends response
+         * 
+         * @since 2.1 Added
+         * 
+         * @param string $view_name
+         * @param null|array $data Data to be applied to template or file; Default NULL
+         * 
+         * @return void Renders content and sends http response
+         * @throws Exception Cannot render
+         */
+        /*----------------------------------------------------------*/
+        public function render(string $view_name, null|array $data=null): void{
+            /**
+             * Validate method
+             */
+            if(is_object($this->view)){
+                // Grab content results
+                $results = $this->view->render($view_name, $data);
+                /**
+                 * Validate content and errors
+                 */
+                if(is_null($results['errors'])){
+                    /**
+                     * Build Body
+                     */
+                    $this->setStatus(200);
+                    $this->setContentType($results['mime']);
+                    $this->setBody($results['content']);
+                    $this->send();
+                } else {
+                    /**
+                     * Build Error Response
+                     */
+                    $this->setStatus(500);
+                    $this->setContentType('application/json');
+                    $this->setBody(json_encode($results['errors']));
+                    $this->send();
+                }
+            } else {
+                throw new Exception('Cannot render content! View engine not set in Response Object!');
+            }
         }
         /*----------------------------------------------------------*/
         /**

@@ -82,3 +82,10 @@ string(44) "Cannot resend headers! Headers already sent!"
 
 ---------------------------------------------------------------------------
 
+Timestamp: 2025-05-08 23:43:40
+Filepath:/var/www/dev/packages/php_http_manager/test/index.php(110)
+Message: ERROR: Exception 
+string(74) "Cannot send http response! Missing headers: Status or Content-Type in send"
+
+---------------------------------------------------------------------------
+

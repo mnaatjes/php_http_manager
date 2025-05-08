@@ -38,6 +38,10 @@
      */
     require_once('router/Router.php');
     /**
+     * View Engine Object
+     */
+    require_once('view_engine/ViewEngine.php');
+    /**
      * MAIN PHP HTTP Manager Class
      */
     require_once('manager/HttpManager.php');

@@ -1,0 +1,78 @@
+/* General Reset and Base Styles */
+body {
+    font-family: sans-serif; /* A clean, readable sans-serif font */
+    line-height: 1.6; /* Comfortable line spacing for readability */
+    margin: 0; /* Remove default browser margins */
+    padding: 0; /* Remove default browser padding */
+    background-color: #f4f4f4; /* Light gray background */
+    color: #333; /* Dark gray text for good contrast */
+  }
+  
+  /* Container to center content on larger screens */
+  .container {
+    max-width: 960px; /* Adjust as needed for your layout */
+    margin: 0 auto; /* Center the container horizontally */
+    padding: 20px; /* Add some padding around the content */
+  }
+  
+  /* Basic typography */
+  h1, h2, h3 {
+    color: #333; /* Dark heading text */
+    margin-bottom: 1rem; /* Space below headings */
+  }
+  
+  h1 {
+    font-size: 2.5rem; /* Larger font size for main heading */
+  }
+  
+  h2 {
+    font-size: 2rem;
+  }
+  
+  h3 {
+    font-size: 1.5rem;
+  }
+  
+  p {
+    margin-bottom: 1rem; /* Space below paragraphs */
+  }
+  
+  a {
+    color: #007bff; /* A common blue for links */
+    text-decoration: none; /* Remove default underline */
+  }
+  
+  a:hover {
+    text-decoration: underline; /* Add underline on hover for better feedback */
+  }
+  
+  /* Basic navigation */
+  nav ul {
+    list-style: none; /* Remove bullet points */
+    padding: 0;
+    margin: 0;
+    display: flex; /* Arrange navigation items horizontally */
+  }
+  
+  nav li {
+    margin-right: 20px; /* Space between navigation items */
+  }
+  
+  nav li:last-child {
+    margin-right: 0; /* Remove margin from the last item */
+  }
+  
+  nav a {
+    display: block; /* Make the entire link clickable */
+    padding: 10px 0; /* Add some vertical padding */
+  }
+  
+  /* Simple footer */
+  footer {
+    text-align: center; /* Center the footer text */
+    padding: 20px 0;
+    margin-top: 30px; /* Space above the footer */
+    background-color: #ddd; /* Light gray footer background */
+    color: #555; /* Medium gray footer text */
+    font-size: 0.9rem; /* Slightly smaller font size */
+  }

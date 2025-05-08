@@ -407,7 +407,6 @@
              * - Determine if Array
              * - Define $current
              */
-            //var_dump($handlers);
             $has_next = false;
             // Check array
             if(is_array($handlers)){

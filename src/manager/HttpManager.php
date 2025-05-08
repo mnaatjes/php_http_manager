@@ -44,6 +44,10 @@
          * @var array $routes
          */
         public array $routes = [];
+        /**
+         * @var null|object $viewEngine
+         */
+        protected ?object $viewEngine;
         /*----------------------------------------------------------*/
         /**
          * Construct:
@@ -60,10 +64,17 @@
              */
             $this->config = $this->parseConfig($config);
             /**
+             * Declare viewEngine and define default behavior
+             */
+            $this->viewEngine = new ViewEngine(
+                // Directory
+                isset($this->config['views']) && is_string($this->config['views']) ? $this->config['views'] : null
+            );
+            /**
              * Define request and response objects
              */
             $this->request    = new Request($this->config['request']);
-            $this->response   = new Response($this->config['response']);
+            $this->response   = new Response($this->config['response'], $this->viewEngine);
             /**
              * Define Main Router
              */
@@ -80,7 +91,12 @@
                 'request'   => [],
                 'response'  => [],
                 'router'    => [],
-                'views'     => [],
+                'views'     => isset($config['views']) ? $config['views'] : null,
+                'perms'     => [
+                    'unix'  => 0777,
+                    'win'   => null,
+                    'sys'   => strtoupper(PHP_OS)
+                ],
                 'errors'    => [],
             ];
         }
@@ -180,22 +196,25 @@
          * 
          */
         /*----------------------------------------------------------*/
-        public function set(){}
+        public function set(...$args){
+
+        }
         /*----------------------------------------------------------*/
         /**
          * Use: 
+         * 
+         * @since 2.0   Initial:
+         * - Added
          * - Mount middleware methods
          * - End request/response cycle
          * - Define paths with routes; i.e. mounting main routes to sub-routes
          * - Executes router instances set in route()
-         * TODO: If $path empty; deploy $handler on all paths
-         * 
-         * @since 2.0   Added
          * 
          * @param null|string $path Path for which middleware method is invoked; If NULL, apply to all
          * @param callable|object|array|null [$handler] Middleware method, Route Handlers | Array of middleware methods or middleware stacks
-         * string $path='', callable|object|array|null $handler
+         * 
          * @return void
+         * 
          * @throws TypeError Invalid string parameter
          * @throws Exception Too many paths
          */
@@ -241,7 +260,6 @@
                     }
                 }
             }
-            //var_dump($this->router->getRoutes());
             return;
         }
         /*----------------------------------------------------------*/
@@ -430,9 +448,7 @@
                             /**
                              * Apply to All paths
                              */
-                            $paths = array_map(function($path){
-                                //var_dump($path);
-                            }, $this->router->getRoutes());
+                            $this->router->addRoute($method, NULL, $middleware);
                         } else {
                             /**
                              * Apply directly to $path:
@@ -645,6 +661,30 @@
                     }
                 }
             };
+        }
+        /*----------------------------------------------------------*/
+        /**
+         * Renders a php file in the application
+         * @param string $view_name of document to be rendered; e.g. for /views/gemini.php, param === "gemini"
+         * @param callable $callback Function called once the view has been rendered
+         * @param null|array $data Data to be applied to template or file; Default NULL
+         * 
+         * @return void Renders stream of content with callback
+         */
+        /*----------------------------------------------------------*/
+        public function render(string $view_name, callable $callback, null|array $data=null){
+            /**
+             * Renders content as string
+             * - Use viewEngine->render() which returns content string | null
+             * - Declare errors container
+             * - Validate content string
+             * - Implement callback
+             */
+            $results = $this->viewEngine->render($view_name, $data, EXTR_OVERWRITE);
+            /**
+             * Implement Callback with $errors and $content from render()
+             */
+            $callback($results['errors'], $results['content']);
         }
         /*----------------------------------------------------------*/
         /**
