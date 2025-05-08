@@ -54,3 +54,31 @@ string(58) "Provided filepath: test/data/test.json is NOT a valid file"
 
 ---------------------------------------------------------------------------
 
+Timestamp: 2025-05-07 02:53:30
+Filepath:/var/www/dev/packages/php_http_manager/test/index.php(110)
+Message: ERROR: Exception 
+string(44) "Cannot resend headers! Headers already sent!"
+
+---------------------------------------------------------------------------
+
+Timestamp: 2025-05-07 02:53:50
+Filepath:/var/www/dev/packages/php_http_manager/test/index.php(110)
+Message: ERROR: Exception 
+string(44) "Cannot resend headers! Headers already sent!"
+
+---------------------------------------------------------------------------
+
+Timestamp: 2025-05-07 02:54:10
+Filepath:/var/www/dev/packages/php_http_manager/test/index.php(110)
+Message: ERROR: Exception 
+string(44) "Cannot resend headers! Headers already sent!"
+
+---------------------------------------------------------------------------
+
+Timestamp: 2025-05-07 02:54:50
+Filepath:/var/www/dev/packages/php_http_manager/test/index.php(110)
+Message: ERROR: Exception 
+string(44) "Cannot resend headers! Headers already sent!"
+
+---------------------------------------------------------------------------
+

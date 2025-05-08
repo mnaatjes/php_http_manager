@@ -3,10 +3,12 @@
     /**
      * HTTP Response Object.
      * 
+     * 
      * @since 1.0   Initial Implementation
      * @since 2.0   Overview:
      *  - Self contained in php_http_manager
-     *  - 
+     *  - TODO: Modify send() for shorthand (i.e. calculates status and content-type and just takes body, defines, and sends)
+     *  - TODO: Create render() method for rendering /views
      */
     /*----------------------------------------------------------*/
     class Response {

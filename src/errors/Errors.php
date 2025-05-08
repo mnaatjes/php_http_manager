@@ -7,9 +7,12 @@
      * - Iterable
      * - Countable
      * 
-     * @version 2.0.0
-     * @since 1.0.0
+     * @version 2.0
+     * @since 1.0:  Initial version on php7.4
+     * @since 2.0   Overview:
+     *  - php version 8.3
      *  - Migrated to php_http_manager in self-contained package
+     *  - __set() returns void not boolean
      */
     /*----------------------------------------------------------*/
     class Errors  {
@@ -161,7 +164,7 @@
          * @return bool - True is successful
          */
         /*----------------------------------------------------------*/
-        private function __set(string $name, $value): bool{
+        private function __set(string $name, $value): void{
             /**
              * Validate:
              * - Normalize $name
@@ -170,11 +173,11 @@
              */
             $name = $this->normalizeProperty($name);
             if(is_null($name)){
-                return false;
+                return;
             }
             if(!in_array($name, $this->categories)){
                 // Invalid Category
-                return false;
+                return;
             }
             /**
              * Set error:
@@ -200,10 +203,6 @@
              * Set Last Entry
              */
             $this->last_entry = [$name => $value];
-            /**
-             * Return Success
-             */
-            return true;
         }
         /*----------------------------------------------------------*/
         /**

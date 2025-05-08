@@ -1,7 +1,7 @@
 <?php
     /**
      * HTTP Controller Primary file to include to use package
-     * @package httpController
+     * @package PHP HTTP Manager
      * @author Michael Naatjes
      * @license MIT
      * @version 2.0
@@ -37,4 +37,8 @@
      * Router object
      */
     require_once('router/Router.php');
+    /**
+     * MAIN PHP HTTP Manager Class
+     */
+    require_once('manager/HttpManager.php');
 ?>

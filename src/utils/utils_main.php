@@ -22,22 +22,31 @@
      * TODO: Integrate into Errors Object
      * TODO: Rename Errors Object HTTPErrors
      */
+    
     require_once('logging/log_dump.php');
     require_once('logging/log_errors.php');
+    
     /**
      * STRINGS
+     * @since 2.0 str_starts_with and str_ends_with included in php8.3 (previous version php7.4)
      */
+    /*
     if(!function_exists('str_starts_with')){
         require_once 'strings/str_starts_with.php';
     }
     if(!function_exists('str_ends_with()')){
         require_once 'strings/str_ends_with.php';
     }
+    */
     require_once('strings/str_has_delimiter.php');
     require_once('strings/str_camel_to_kebab.php');
     require_once('strings/str_camel_to_snake.php');
     require_once('strings/str_snake_to_kebab.php');
     require_once('strings/str_replace_substr.php');
+    /**
+     * ARRAYS
+     */
+    require_once('arrays/array_every.php');
     /**
      * FILES
      */
